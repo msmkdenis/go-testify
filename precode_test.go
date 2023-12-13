@@ -19,7 +19,7 @@ func Test_mainHandle(t *testing.T) {
 		expectedBody      string
 	}{
 		{
-			name:              "Successful request",
+			name:              "Successful request: count=3, city=moscow",
 			path:              "/cafe?count=3&city=moscow",
 			method:            http.MethodGet,
 			expectedCafeCount: 3,
@@ -27,7 +27,7 @@ func Test_mainHandle(t *testing.T) {
 			expectedBody:      "Мир кофе,Сладкоежка,Кофе и завтраки",
 		},
 		{
-			name:              "Successful request",
+			name:              "Successful request: count=1, city=moscow",
 			path:              "/cafe?count=1&city=moscow",
 			method:            http.MethodGet,
 			expectedCafeCount: 1,
@@ -35,7 +35,7 @@ func Test_mainHandle(t *testing.T) {
 			expectedBody:      "Мир кофе",
 		},
 		{
-			name:              "Successful request - cafe count more then exists, returns all",
+			name:              "Successful request: cafe count more then exists, returns all",
 			path:              "/cafe?count=99&city=moscow",
 			method:            http.MethodGet,
 			expectedCafeCount: 4,
@@ -43,14 +43,14 @@ func Test_mainHandle(t *testing.T) {
 			expectedBody:      "Мир кофе,Сладкоежка,Кофе и завтраки,Сытый студент",
 		},
 		{
-			name:         "Bad request - count missing",
+			name:         "Bad request: count missing",
 			path:         "/cafe?count=&city=moscow",
 			method:       http.MethodGet,
 			expectedCode: http.StatusBadRequest,
 			expectedBody: "count missing",
 		},
 		{
-			name:         "Bad request - invalid city (wrong count value)",
+			name:         "Bad request: invalid city (wrong count value)",
 			path:         "/cafe?count=4city=ansbmdanbs",
 			method:       http.MethodGet,
 			expectedCode: http.StatusBadRequest,
