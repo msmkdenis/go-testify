@@ -43,6 +43,20 @@ func Test_mainHandle(t *testing.T) {
 			expectedBody:      "Мир кофе,Сладкоежка,Кофе и завтраки,Сытый студент",
 		},
 		{
+			name:         "Bad request: count negative",
+			path:         "/cafe?count=-1&city=moscow",
+			method:       http.MethodGet,
+			expectedCode: http.StatusBadRequest,
+			expectedBody: "wrong count value",
+		},
+		{
+			name:         "Bad request: count = 0",
+			path:         "/cafe?count=0&city=moscow",
+			method:       http.MethodGet,
+			expectedCode: http.StatusBadRequest,
+			expectedBody: "wrong count value",
+		},
+		{
 			name:         "Bad request: count missing",
 			path:         "/cafe?count=&city=moscow",
 			method:       http.MethodGet,
@@ -50,11 +64,11 @@ func Test_mainHandle(t *testing.T) {
 			expectedBody: "count missing",
 		},
 		{
-			name:         "Bad request: invalid city (wrong count value)",
-			path:         "/cafe?count=4city=ansbmdanbs",
+			name:         "Bad request: invalid city (wrong city value)",
+			path:         "/cafe?count=4&city=ansbmdanbs",
 			method:       http.MethodGet,
 			expectedCode: http.StatusBadRequest,
-			expectedBody: "wrong count value",
+			expectedBody: "wrong city value",
 		},
 	}
 	for _, test := range testCases {
